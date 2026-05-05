@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MovieDetailsViewController: UIViewController {
     
@@ -23,7 +24,9 @@ class MovieDetailsViewController: UIViewController {
     }()
     
     private lazy var posterImageView: UIImageView = {
-        let imgView = UIImageView(image: UIImage(named: movie.image))
+        let url = URL(string: movie.image)
+        let imgView = UIImageView()
+        imgView.kf.setImage(with: url)
         imgView.translatesAutoresizingMaskIntoConstraints = false
         imgView.layer.cornerRadius = 32.0
         imgView.layer.masksToBounds = true

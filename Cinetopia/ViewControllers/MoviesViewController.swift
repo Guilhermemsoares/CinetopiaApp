@@ -11,6 +11,8 @@ class MoviesViewController: UIViewController {
     
     private var filteredMovies: [Movie] = []
     private var isSearchActive: Bool = false
+    private let movieService: MovieService = MovieService()
+    private var movies: [Movie] = []
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -23,13 +25,10 @@ class MoviesViewController: UIViewController {
     }()
     
     private lazy var searchBar: UISearchBar = {
-       let searchBar = UISearchBar()
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.placeholder = "Search Movie"
-        searchBar.searchTextField.textColor = .black
-        searchBar.searchTextField.backgroundColor = .gray
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "Pesquisar"
+        searchBar.searchTextField.backgroundColor = .white
         searchBar.delegate = self
-        
         return searchBar
     }()
     
@@ -39,12 +38,19 @@ class MoviesViewController: UIViewController {
         setupNavigationBar()
         addSubviews()
         setupConstraints()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        view.addGestureRecognizer(tapGesture)
+        Task {
+            await fetchMovies()
+        }
+        
     }
     
-    @objc private func hideKeyboard() {
-        searchBar.resignFirstResponder()
+    private func fetchMovies() async {
+        do {
+            self.movies = try await movieService.getMovies()
+            self.tableView.reloadData()
+        } catch (let error) {
+            print(error)
+        }
     }
     
     private func addSubviews() {
@@ -83,34 +89,17 @@ class MoviesViewController: UIViewController {
 
 extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isSearchActive && filteredMovies.isEmpty {
-            return 1 // one “no results” row
-        }
         return isSearchActive ? filteredMovies.count : movies.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isSearchActive && filteredMovies.isEmpty {
-            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "emptyCell")
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as? MovieTableViewCell {
+            let movie = isSearchActive ? filteredMovies[indexPath.row] : movies[indexPath.row]
+            cell.configureCell(movie: movie)
             cell.selectionStyle = .none
-            cell.backgroundColor = .clear
-            cell.textLabel?.text = "No results"
-            cell.textLabel?.textColor = .black
-            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-            cell.detailTextLabel?.text = "Try a different title or check your spelling."
-            cell.detailTextLabel?.textColor = .black
-            cell.detailTextLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-            cell.textLabel?.textAlignment = .center
-            cell.detailTextLabel?.textAlignment = .center
             return cell
         }
-
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MovieTableViewCell
-        let movie = isSearchActive ? filteredMovies[indexPath.row] : movies[indexPath.row]
-        cell.configureCell(movie: movie)
-        cell.selectionStyle = .none
-        return cell
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -126,32 +115,15 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension MoviesViewController: UISearchBarDelegate {
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             isSearchActive = false
-            filteredMovies.removeAll()
-            searchBar.showsCancelButton = false
         } else {
-            isSearchActive = true
-            searchBar.showsCancelButton = true
-            filteredMovies = movies.filter({ movie in
+            filteredMovies = movies.filter { movie in
                 movie.title.lowercased().contains(searchText.lowercased())
-            })
+            }
+            isSearchActive = true
         }
         tableView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        isSearchActive = false
-        filteredMovies.removeAll()
-        searchBar.showsCancelButton = false
-        searchBar.resignFirstResponder()
-        tableView.reloadData()
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchBar.showsCancelButton = true
     }
 }
