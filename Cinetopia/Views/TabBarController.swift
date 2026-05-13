@@ -30,7 +30,9 @@ class TabBarController: UITabBarController {
         home.tabBarItem.image = homeSymbol
         home.tabBarItem.title = "Movies List"
         
-        let favorites = UINavigationController(rootViewController: FavoriteMoviesViewController())
+        let favoriteView = FavoriteMoviesView()
+        let favoritePresenter = FavoriteMoviesPresenter(view: favoriteView)
+        let favorites = UINavigationController(rootViewController: FavoriteMoviesViewController(view: favoriteView, presenter: favoritePresenter))
         
         let heartSymbol = UIImage(systemName: "heart", withConfiguration: symbolConfiguration)
         favorites.tabBarItem.image = heartSymbol

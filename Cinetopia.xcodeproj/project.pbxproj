@@ -26,6 +26,8 @@
 		63BA5E2F2FAD1F6D0043EC91 /* MovieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BA5E2E2FAD1F6D0043EC91 /* MovieManager.swift */; };
 		63DFA2F82FAA7FE900D9272E /* FavoriteMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DFA2F72FAA7FE900D9272E /* FavoriteMoviesViewController.swift */; };
 		63DFA2FA2FAA866C00D9272E /* FavoriteMovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DFA2F92FAA866C00D9272E /* FavoriteMovieCollectionViewCell.swift */; };
+		63F4F7C62FB5124700A22AE8 /* FavoriteMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F4F7C52FB5124700A22AE8 /* FavoriteMoviesView.swift */; };
+		63F4F7C82FB5126F00A22AE8 /* FavoriteMoviesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F4F7C72FB5126500A22AE8 /* FavoriteMoviesPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		63BA5E2E2FAD1F6D0043EC91 /* MovieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieManager.swift; sourceTree = "<group>"; };
 		63DFA2F72FAA7FE900D9272E /* FavoriteMoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesViewController.swift; sourceTree = "<group>"; };
 		63DFA2F92FAA866C00D9272E /* FavoriteMovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMovieCollectionViewCell.swift; sourceTree = "<group>"; };
+		63F4F7C52FB5124700A22AE8 /* FavoriteMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesView.swift; sourceTree = "<group>"; };
+		63F4F7C72FB5126500A22AE8 /* FavoriteMoviesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesPresenter.swift; sourceTree = "<group>"; };
 		BD9D83DB65C26279D94099FA /* Pods-Cinetopia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cinetopia.debug.xcconfig"; path = "Target Support Files/Pods-Cinetopia/Pods-Cinetopia.debug.xcconfig"; sourceTree = "<group>"; };
 		E21F8EC0ED4908489E0951AF /* Pods_Cinetopia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cinetopia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -117,7 +121,7 @@
 				480C2CDF2AF089A900E8C875 /* HomeViewController.swift */,
 				637E5CEC2FB365C4006152F8 /* Movies */,
 				48AE71612AF199B4002E4E8A /* MovieDetailsViewController.swift */,
-				63DFA2F72FAA7FE900D9272E /* FavoriteMoviesViewController.swift */,
+				63F4F7C42FB5121100A22AE8 /* FavoriteMovies */,
 				63BA5E2C2FACD2580043EC91 /* TabBarController.swift */,
 			);
 			path = Views;
@@ -170,6 +174,7 @@
 		637E5CEF2FB36CA7006152F8 /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
+				63F4F7C72FB5126500A22AE8 /* FavoriteMoviesPresenter.swift */,
 				637E5CF02FB36CC0006152F8 /* MoviesPresenter.swift */,
 			);
 			path = Presenters;
@@ -181,6 +186,15 @@
 				637E5CF32FB3BA69006152F8 /* MoviesInteractor.swift */,
 			);
 			path = Interactors;
+			sourceTree = "<group>";
+		};
+		63F4F7C42FB5121100A22AE8 /* FavoriteMovies */ = {
+			isa = PBXGroup;
+			children = (
+				63DFA2F72FAA7FE900D9272E /* FavoriteMoviesViewController.swift */,
+				63F4F7C52FB5124700A22AE8 /* FavoriteMoviesView.swift */,
+			);
+			path = FavoriteMovies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,7 +318,9 @@
 				63DFA2F82FAA7FE900D9272E /* FavoriteMoviesViewController.swift in Sources */,
 				63DFA2FA2FAA866C00D9272E /* FavoriteMovieCollectionViewCell.swift in Sources */,
 				480C2CE02AF089A900E8C875 /* HomeViewController.swift in Sources */,
+				63F4F7C82FB5126F00A22AE8 /* FavoriteMoviesPresenter.swift in Sources */,
 				637E5CF42FB3BA6F006152F8 /* MoviesInteractor.swift in Sources */,
+				63F4F7C62FB5124700A22AE8 /* FavoriteMoviesView.swift in Sources */,
 				480C2CDC2AF089A900E8C875 /* AppDelegate.swift in Sources */,
 				63BA5E2B2FABEA930043EC91 /* FavoriteCollectionReusableView.swift in Sources */,
 				48AE71602AF1976B002E4E8A /* MovieTableViewCell.swift in Sources */,
